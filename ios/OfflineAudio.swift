@@ -56,6 +56,11 @@ class OfflineAudio {
     try? FileManager.default.createDirectory(at: URL(fileURLWithPath: cacheDirectoryPath),
                                              withIntermediateDirectories: true)
 
+    // And exclude it from backups
+    var values = URLResourceValues()
+    values.isExcludedFromBackup = true
+    try? URL(fileURLWithPath: cacheDirectoryPath).setResourceValues(values)
+
     nd.add(name: .lccUserInfoChanged) { [weak self] _ in self?.userInfoChanged() }
   }
 
